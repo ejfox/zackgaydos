@@ -7,8 +7,13 @@
 </template>
 <script setup></script>
 <style>
-/* use Figtree font for everything */
+/* Base font for body text */
 body {
-  font-family: 'Figtree', sans-serif;
+  font-family: 'Monomakh', serif;
+}
+
+/* Display font for headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Doto', sans-serif;
 }
 </style>

@@ -2,6 +2,46 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/981b9e46-6878-4ddb-a716-2713c5f3e412/deploy-status)](https://app.netlify.com/sites/ejfox-nuxt-template/deploys)
 
+## Database Schema
+
+### Posts Table
+```sql
+create table zackposts (
+  id uuid default gen_random_uuid() primary key,
+  content text not null,
+  phone_number text,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Enable RLS
+alter table zackposts enable row level security;
+
+-- Create a policy that allows all operations for now
+create policy "Allow all operations" on zackposts
+  for all
+  using (true)
+  with check (true);
+```
+
+This minimalist schema provides:
+- `id`: Unique identifier for each post
+- `content`: The main text content of the post
+- `phone_number`: The Twilio number that sent the message (optional)
+- `created_at`: Timestamp of when the post was created
+- `updated_at`: Timestamp of last modification
+
+Row Level Security (RLS) is enabled by default with a permissive policy. You may want to restrict this in production.
+
+## Environment Setup
+
+Create a `.env` file with the following variables:
+```bash
+# Twilio (required for SMS endpoint)
+TWILIO_AUTH_TOKEN=your_auth_token_here
+TWILIO_ACCOUNT_SID=your_account_sid_here
+```
+
 ## Usage
 `npx room302-template`
 
